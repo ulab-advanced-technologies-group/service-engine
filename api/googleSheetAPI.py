@@ -19,10 +19,10 @@ except ImportError:
 # at ~/.credentials/sheets.googleapis.com-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'ULAB website'
+APPLICATION_NAME = 'Task Request Automation'
 
 
-def get_credentials():
+def get_credentials(client_secret_file):
     """Gets valid user credentials from storage.
 
     If nothing has been stored, or if the stored credentials are invalid,
@@ -41,7 +41,7 @@ def get_credentials():
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        flow = client.flow_from_clientsecrets(client_secret_file, SCOPES)
         flow.user_agent = APPLICATION_NAME
         if flags:
             credentials = tools.run_flow(flow, store, flags)
@@ -50,14 +50,14 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def retrieveSpreadsheetData(spreadsheetId, rangeName):
+def retrieveSpreadsheetData(spreadsheetId, rangeName, client_secret_file):
     """Shows basic usage of the Sheets API.
 
     Creates a Sheets API service object and prints the names and majors of
     students in a sample spreadsheet:
     https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
     """
-    credentials = get_credentials()
+    credentials = get_credentials(client_secret_file)
     http = credentials.authorize(httplib2.Http())
     discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
                     'version=v4')
@@ -109,7 +109,12 @@ def convertImageURL(firstName, lastName):
     return imageFileAddr
 
 if __name__ == '__main__':
-    values = retrieveSpreadsheetData("1GzJxD0LLVln3bZFbTJAgJZ-XkRHv-QRZ7AUUTk7_0Xg", 'A2:M')
+    """
+        Used for testing on terminal
+
+        To test, type the following command onto the terminal: python3 [filename]
+    """
+    values = retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)
     print(convertToDictionaryFormat(values))
     for row in values:
-        print("{} \n".format(len(row)))
+        print("{} \n".format(row))
