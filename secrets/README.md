@@ -1,4 +1,5 @@
-This directory is for putting all of your sensitive information.
+*This directory is for putting all of your sensitive information.*
 
-Files that should be in this directory:
-- client_secret.json
+## Files that Should be in this Directory
+### client_secret.json
+A file needed for accessing the Google Sheet API. 
