@@ -115,6 +115,7 @@ if __name__ == '__main__':
         To test, type the following command onto the terminal: python3 [filename]
     """
     values = retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)
-    print(convertToDictionaryFormat(values))
-    for row in values:
-        print("{} \n".format(row))
+    # print(convertToDictionaryFormat(values))
+    print(values)
+    # for row in values:
+    #     print("{} \n".format(row))
