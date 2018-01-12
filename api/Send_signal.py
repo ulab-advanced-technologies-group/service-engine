@@ -4,10 +4,10 @@ from Thread import Timer
 prev_lenth = -1 #keeps track of the lenth
 
 def check_and_send():
-    nonlocal lenth
+    nonlocal prev_lenth
     values = retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)
-    if len(value) != lenth:
-        lenth = len(value)
+    if len(value) != prev_lenth:
+        prev_lenth = len(value)
         data = filter(value, lambda x: x[1].lower != yes) #since I don't know how to delete rows, which wh=ould be even better
         for row in data:
             message = "Look, you have a {} priority message from {}: {}".format(row[3], row[5], row[2])
