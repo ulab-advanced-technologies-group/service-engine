@@ -1,5 +1,7 @@
 from googleSheetAPI import retrieveSpreadsheetData, CLIENT_SECRET_FILE
 from threading import Timer
+from gmailAPI import send_email
+from Emails import emails
 
 prev_length = -1 #keeps track of the length
 
@@ -13,14 +15,13 @@ def check_and_send():
         for row in data:
             message = "Look, you have a {} priority message from {}: {}".format(row[3], row[5], row[2])
             to = row[4]
-            send_message(message, to)
-        return Timer(5.0, check_and_send).start()
+            send_message(row[4], "You have been assigned a task", message)
+            send_message(row[5], "You have just assigned {} a task".format(row[4]), "Task has been assgined")
+        return Timer(1800.0, check_and_send).start() #Ask Amit, again
 
+def send_message(to_whom, subject, message):
+    email_to_send = emails[to_whom]
+    send_email("phatpham@berkeley.edu", emails[to_whom], subject, message )
 
-
-def send_message(message, to):
-    print(message)
-    print(to)
-    #return #send a get request to our website
 
 check_and_send() #runs for the first time immediately
