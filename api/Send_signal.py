@@ -14,7 +14,6 @@ def check_and_send():
         data = filter(lambda x: x[1].lower != "yes", values) # Since I don't know how to delete rows, which would be even better.
         for row in data:
             message = "Look, you have a {} priority message from {}: {}".format(row[3], row[5], row[2])
-            to = row[4]
             send_message(row[4], "You have been assigned a task", message)
             send_message(row[5], "You have just assigned {} a task".format(row[4]), "Task has been assgined")
         return Timer(1800.0, check_and_send).start() #Ask Amit, again
