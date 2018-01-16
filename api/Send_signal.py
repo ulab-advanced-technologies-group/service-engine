@@ -29,6 +29,7 @@ def send_message(row):
 #Takes in request row, and returns [recipients, subject1, message1, subject2, message2]
 #subject2 and message2 are for the requester
 def message_handler(row):
+    """Remember to implement the remind function in all cases"""
     topic = row[2]
     if topic == "Contacting someone from outside of ULAB":
         recipients = get_recipients(group)
