@@ -26,8 +26,50 @@ def send_message(row):
      send_email("phatpham@berkeley.edu", row[11], message[3], message[4])
 
 
-#Takes in request row, and returns [recipients, subject2, message1, subject2, message2]
+#Takes in request row, and returns [recipients, subject1, message1, subject2, message2]
+#subject2 and message2 are for the requester
 def message_handler(row):
+    topic = row[2]
+    if topic == "Contacting someone from outside of ULAB":
+        recipients = get_recipients(group)
+        subject = "You have been assigned a task with {} priority".format(row[3])
+        message = "{} wants you to contact {} from outside of ULAB with {} priority.\nExtra Information: {}\n".format(row[9], row[27], row[3], row[28])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
+    if topic == "Getting equipment":
+        return
+    if topic == "Getting information on a specific lab":
+        return
+    if topic == "Recruiting":
+        return
+    if topic == "Publicizing something":
+        return
+    if topic == "Reimbursement":
+        return
+    if topic == "Booking a room":
+        return
+    if topic == "Training for lab equipment":
+        return
+    if topic == "Attaining certification status":
+        return
+    if topic == "Expert Consulting":
+        return
+    if topic == "Activity Development":
+        return
+    if topic == "Securing Lab tours":
+        return
+    if topic == "Curricular Development":
+        return
+    if topic == "Liaison Training":
+        return
+    if topic == "Make a change to the website":
+        return
+    if topic == "On Boarding":
+        return
+    if topic == "Graphic Design":
+        return
+    #Other Case
     return
 
 def remind(row):
@@ -40,3 +82,21 @@ def remind(row):
 
 check_and_send() #runs for the first time immediately
 Timer(21600, remind).start()
+
+Contacting someone from outside of ULAB
+Getting equipment
+Getting information on a specific lab
+Recruiting
+Publicizing something
+Reimbursement
+Booking a room
+Training for lab equipment
+Attaining certification status
+Expert Consulting
+Activity Development
+Securing Lab tours
+Curricular Development
+Liaison Training
+Make a change to the website
+On Boarding
+Graphic Design
