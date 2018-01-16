@@ -67,14 +67,23 @@ def message_handler(row):
         return
     if topic == "Curricular Development":
         return
+
     if topic == "Liaison Training":
         return
+
     if topic == "Make a change to the website":
         return
+
     if topic == "On Boarding":
         return
+
     if topic == "Graphic Design":
-        return
+        recipients = get_recipients(group)
+        subject = "{} has a Graphic Design request with {} priority".format(row[9], row[3])
+        message = "{} from the {} needs a {} with {} priority. \nThey need this by {}. Estimated time the project will take: {}. \nExtra Information: Theme: {}. Preferred Colors: {}. Inspirational Samples: {}. Additional Comments: {}.".format(row[9], row[10], row[15], row[3], row[16], row[6], row[17], row[18], row[19], row[20])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
     #Other Case
     return
 
