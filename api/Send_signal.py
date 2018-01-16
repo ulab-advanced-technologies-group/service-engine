@@ -20,7 +20,7 @@ def check_and_send():
 
 def send_message(to_whom, subject, message):
     email_to_send = emails[to_whom]
-    send_email("phatpham@berkeley.edu", emails[to_whom], subject, message )
+    send_email("phatpham@berkeley.edu", emails[to_whom], subject, message ) # This could be counted as Spam.
 
 
 check_and_send() #runs for the first time immediately
