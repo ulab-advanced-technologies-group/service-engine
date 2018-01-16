@@ -38,7 +38,12 @@ def message_handler(row):
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
     if topic == "Getting equipment":
-        return
+        recipients = get_recipients(group)
+        subject = "{} wants {} with {} priority".format(row[9], row[29], row[3])
+        message = "{} wants {}. Reference: {}, Est. Cost {}, Intended use {}".format(row[9], row[29], row[30],row[31], row[32])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
     if topic == "Getting information on a specific lab":
         return
     if topic == "Recruiting":
@@ -83,20 +88,20 @@ def remind(row):
 check_and_send() #runs for the first time immediately
 Timer(21600, remind).start()
 
-Contacting someone from outside of ULAB
-Getting equipment
-Getting information on a specific lab
-Recruiting
-Publicizing something
-Reimbursement
-Booking a room
-Training for lab equipment
-Attaining certification status
-Expert Consulting
-Activity Development
-Securing Lab tours
-Curricular Development
-Liaison Training
-Make a change to the website
-On Boarding
-Graphic Design
+# Contacting someone from outside of ULAB
+# Getting equipment
+# Getting information on a specific lab
+# Recruiting
+# Publicizing something
+# Reimbursement
+# Booking a room
+# Training for lab equipment
+# Attaining certification status
+# Expert Consulting
+# Activity Development
+# Securing Lab tours
+# Curricular Development
+# Liaison Training
+# Make a change to the website
+# On Boarding
+# Graphic Design
