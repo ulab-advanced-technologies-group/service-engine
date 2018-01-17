@@ -31,7 +31,6 @@ def send_message(row):
 def message_handler(row):
     """Remember to implement the remind function in all cases"""
     topic = row[2]
-    #Why are we not changing to elif?
     if topic == "Contacting someone from outside of ULAB":
         recipients = get_recipients(group)
         subject = "You have been assigned a task with {} priority".format(row[3])
@@ -39,62 +38,80 @@ def message_handler(row):
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    elif topic == "Getting equipment":
+    if topic == "Getting equipment":
         recipients = get_recipients(group)
         subject = "{} wants {} with {} priority".format(row[9], row[29], row[3])
         message = "{} wants {}. Reference: {}, Est. Cost {}, Intended use {}".format(row[9], row[29], row[30],row[31], row[32])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    elif topic == "Getting information on a specific lab":
+    if topic == "Getting information on a specific lab":
         recipients = get_recipients(group)
         subject = "{} wants information from {} with {} priority".format(row[9], row[27], row[3])
         message = "{} wants information from {}.\n Note that {}".format(row[9], row[27], row[28])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    elif topic == "Recruiting":
+    if topic == "Recruiting":
         recipients = get_recipients(group)
         subject = "{} wants a new {} with {} priority".format(row[9], row[24], row[3])
         message = "{} wants a new {}.\nWork will involve {} and its requirements are {}".format(row[9], row[26], row[25])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    elif topic == "Publicizing something":
+    if topic == "Publicizing something":
         return
-    elif topic == "Reimbursement":
+    if topic == "Reimbursement":
         return
-    elif topic == "Booking a room":
+    if topic == "Booking a room":
         return
-    elif topic == "Training for lab equipment":
+    if topic == "Training for lab equipment":
         return
-    elif topic == "Attaining certification status":
+    if topic == "Attaining certification status":
         return
-    elif topic == "Expert Consulting":
+    if topic == "Expert Consulting":
         return
-    elif topic == "Activity Development":
+    if topic == "Activity Development":
         return
-    elif topic == "Securing Lab tours":
-        return
-    elif topic == "Curricular Development":
+    if topic == "Securing Lab tours":
         return
 
-    elif topic == "Liaison Training":
+    if topic == "Curricular Development":
         return
+        "This is actually a work-in-progress on the Google Forms"
 
-    elif topic == "Make a change to the website":
-        return
+    if topic == "Liaison Training":
+        recipients = get_recipients(group)
+        subject = "{} requests Liaison Training with {} priority".format(row[9], row[3])
+        message = "{} from the {} request(s) training for {} with {} priority. Their email is {}.".format(row[9], row[10], row[33], row[3], row[35])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
 
-    elif topic == "On Boarding":
-        return
+    if topic == "Make a change to the website":
+        recipients = get_recipients(group)
+        subject = "{} requests a change to the website with {} priority".format(row[9], row[3])
+        message = "{} from the {} requests (a/an) {} kind of change for the website. \nDescription of change: {} \nReasons for the change: {} \nOptional sketch for a design change: {}".format(row[9], row[10], row[50], row[52], row[51], row[53])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
 
-    elif topic == "Graphic Design":
+    if topic == "On Boarding":
+        recipients = get_recipients(group)
+        subject = "{} needs {} to be On-Boarded with {} priority".format(row[9], row[64], row[3])
+        message = "{} from the {} needs {} to be On-Boarded with {} priority.".format(row[9], row[10], row[64], row[3])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
+
+    if topic == "Graphic Design":
         recipients = get_recipients(group)
         subject = "{} has a Graphic Design request with {} priority".format(row[9], row[3])
         message = "{} from the {} needs a {} with {} priority. \nThey need this by {}. Estimated time the project will take: {}. \nExtra Information: Theme: {}. Preferred Colors: {}. Inspirational Samples: {}. Additional Comments: {}.".format(row[9], row[10], row[15], row[3], row[16], row[6], row[17], row[18], row[19], row[20])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
+
     #Other Case
     return
 
