@@ -31,6 +31,7 @@ def send_message(row):
 def message_handler(row):
     """Remember to implement the remind function in all cases"""
     topic = row[2]
+    #Why are we not changing to elif?
     if topic == "Contacting someone from outside of ULAB":
         recipients = get_recipients(group)
         subject = "You have been assigned a task with {} priority".format(row[3])
@@ -38,46 +39,56 @@ def message_handler(row):
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    if topic == "Getting equipment":
+    elif topic == "Getting equipment":
         recipients = get_recipients(group)
         subject = "{} wants {} with {} priority".format(row[9], row[29], row[3])
         message = "{} wants {}. Reference: {}, Est. Cost {}, Intended use {}".format(row[9], row[29], row[30],row[31], row[32])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
-    if topic == "Getting information on a specific lab":
+    elif topic == "Getting information on a specific lab":
+        recipients = get_recipients(group)
+        subject = "{} wants information from {} with {} priority".format(row[9], row[27], row[3])
+        message = "{} wants information from {}.\n Note that {}".format(row[9], row[27], row[28])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
+    elif topic == "Recruiting":
+        recipients = get_recipients(group)
+        subject = "{} wants a new {} with {} priority".format(row[9], row[24], row[3])
+        message = "{} wants a new {}.\nWork will involve {} and its requirements are {}".format(row[9], row[26], row[25])
+        subject2 = "You have requested a task with {} priority".format(row[3])
+        message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
+        return [recipients, subject, message, subject2, message2]
+    elif topic == "Publicizing something":
         return
-    if topic == "Recruiting":
+    elif topic == "Reimbursement":
         return
-    if topic == "Publicizing something":
+    elif topic == "Booking a room":
         return
-    if topic == "Reimbursement":
+    elif topic == "Training for lab equipment":
         return
-    if topic == "Booking a room":
+    elif topic == "Attaining certification status":
         return
-    if topic == "Training for lab equipment":
+    elif topic == "Expert Consulting":
         return
-    if topic == "Attaining certification status":
+    elif topic == "Activity Development":
         return
-    if topic == "Expert Consulting":
+    elif topic == "Securing Lab tours":
         return
-    if topic == "Activity Development":
-        return
-    if topic == "Securing Lab tours":
-        return
-    if topic == "Curricular Development":
+    elif topic == "Curricular Development":
         return
 
-    if topic == "Liaison Training":
+    elif topic == "Liaison Training":
         return
 
-    if topic == "Make a change to the website":
+    elif topic == "Make a change to the website":
         return
 
-    if topic == "On Boarding":
+    elif topic == "On Boarding":
         return
 
-    if topic == "Graphic Design":
+    elif topic == "Graphic Design":
         recipients = get_recipients(group)
         subject = "{} has a Graphic Design request with {} priority".format(row[9], row[3])
         message = "{} from the {} needs a {} with {} priority. \nThey need this by {}. Estimated time the project will take: {}. \nExtra Information: Theme: {}. Preferred Colors: {}. Inspirational Samples: {}. Additional Comments: {}.".format(row[9], row[10], row[15], row[3], row[16], row[6], row[17], row[18], row[19], row[20])
