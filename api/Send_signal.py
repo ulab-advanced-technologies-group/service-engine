@@ -4,6 +4,7 @@ from gmailAPI import send_email
 from Emails import emails
 
 remindDict = {"type of task": "How often"}
+actionsDict = {"type of task": "function"}
 prev_length = len(retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)) #keeps track of the length
 
 def check_and_send():
@@ -15,7 +16,7 @@ def check_and_send():
         prev_length = len(values)
         for row in new_entries:
             send_message(row)
-        Timer(10.0, check_and_send).start() #Ask Amit, again
+    Timer(10.0, check_and_send).start() #Ask Amit, again
 
 def send_message(row):
      message = message_handler(row)
@@ -31,6 +32,7 @@ def send_message(row):
 def message_handler(row):
     """Remember to implement the remind function in all cases"""
     topic = row[2]
+    actionsDict[topic]()
     if topic == "Contacting someone from outside of ULAB":
         recipients = get_recipients(group)
         subject = "You have been assigned a task with {} priority".format(row[3])
@@ -84,7 +86,7 @@ def message_handler(row):
         recipients = get_recipients(group)
         subject = "{} requests Liaison Training with {} priority".format(row[9], row[3])
         message = "{} from the {} request(s) training for {} with {} priority. Their email is {}.".format(row[9], row[10], row[33], row[3], row[35])
-        subject2 = "You have requested a task with {} priority".format(row[3])
+hvsubject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
 
