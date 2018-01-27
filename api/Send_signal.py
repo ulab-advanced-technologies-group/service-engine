@@ -76,6 +76,7 @@ def message_handler(row):
     if topic == "Activity Development":
         return
     if topic == "Securing Lab tours":
+        ##form not finished
         return
 
     if topic == "Curricular Development":
