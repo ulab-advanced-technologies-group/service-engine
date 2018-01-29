@@ -3,7 +3,6 @@ from googleapiclient import discovery
 from googleSheetAPI import retrieveSpreadsheetData, CLIENT_SECRET_FILE
 import httplib2
 import os
-
 from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
@@ -15,11 +14,10 @@ try:
 except ImportError:
     flags = None
 
-# If modifying these scopes, delete your previously saved credentials
-# at ~/.credentials/sheets.googleapis.com-python-quickstart.json
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 CLIENT_SECRET_FILE = 'client_secret.json'
-APPLICATION_NAME = 'Google Sheets API Python Quickstart'
+APPLICATION_NAME = 'ULAB TASK LIST MANAGER'
+spreadsheet_id = '12139-XV2BxNQ_MND-Ng6YQEPK3FK5V8D-U2_-YNiVOI'
 
 
 def get_credentials():
@@ -50,14 +48,6 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-credentials = get_credentials()
-http = credentials.authorize(httplib2.Http())
-discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
-                'version=v4')
-service = discovery.build('sheets', 'v4', http=http,
-                          discoveryServiceUrl=discoveryUrl)
-spreadsheet_id = '12139-XV2BxNQ_MND-Ng6YQEPK3FK5V8D-U2_-YNiVOI'
-
 # Update value at given Cell (A1 Format)
 # Example: updateCellRequest("x", A2)
 def updateCellRequest(text, cell):
@@ -66,7 +56,6 @@ def updateCellRequest(text, cell):
     reqBody["majorDimension"] = "COLUMNS"
     request = service.spreadsheets().values().update(spreadsheetId=spreadsheet_id, valueInputOption="USER_ENTERED", range=cell, body=reqBody)
     return request.execute()
-    
 
 ## Create and Add New Task to Google Sheets
 ## Return Task ID (also same as row)
@@ -77,7 +66,7 @@ def createTask(name, assignee, deadline, taskType, priority, info=None, file=Non
     reqBody["values"] = [[name, assignee, deadline, "", taskType, "Pending", info, file, priority]]
     reqBody["majorDimension"] = "ROWS"
     request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, valueInputOption="USER_ENTERED", range="A3", insertDataOption="INSERT_ROWS", body=reqBody)
-    return request.execute()
+    return int(request.execute()['updates']['updatedRange'].split(":")[-1][1:])
 
 ## Get Task given its ID
 def getTask(id):
@@ -85,12 +74,12 @@ def getTask(id):
 
 ## Set Task to Completed
 def completeTask(id):
-    cell = "G" + str(id)
+    cell = "F" + str(id)
     return updateCellRequest("Resolved", cell)
 
 ## Set Task to In Progress
 def acceptTask(id):
-    cell = "G" + str(id)
+    cell = "F" + str(id)
     return updateCellRequest("In Progress", cell)
 
 ## Get All Tasks for a Person
@@ -104,3 +93,10 @@ def getAllTasks():
 ## Return list of uncompleted Tasks
 def getAllUncompletedTasks():
     return
+
+credentials = get_credentials()
+http = credentials.authorize(httplib2.Http())
+discoveryUrl = ('https://sheets.googleapis.com/$discovery/rest?'
+                'version=v4')
+service = discovery.build('sheets', 'v4', http=http,
+                          discoveryServiceUrl=discoveryUrl)
