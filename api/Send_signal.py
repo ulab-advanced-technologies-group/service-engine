@@ -5,14 +5,16 @@ from Emails import emails
 
 remindDict = {"type of task": "How often"}
 actionsDict = {"type of task": "function"}
-prev_length = len(retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)) #keeps track of the length
+prev_length = len(retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:DD', CLIENT_SECRET_FILE)) #keeps track of the length
+import gmailAPI
+credentials = gmailAPI.get_credentials()
 
 def check_and_send():
     print("Checking..")
     global prev_length
-    values = retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:M', CLIENT_SECRET_FILE)
+    values = retrieveSpreadsheetData("1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg", 'A2:DD', CLIENT_SECRET_FILE)
     if len(values) != prev_length:
-        new_entries = values[:prev_length]
+        new_entries = values[prev_length:]
         prev_length = len(values)
         for row in new_entries:
             send_message(row)
@@ -20,11 +22,12 @@ def check_and_send():
 
 def send_message(row):
      message = message_handler(row)
-     for person in message[0]:
+     #for person in message[0]:
          #Email for the assigned
-         send_email("phatpham@berkeley.edu", message[0][person], message[1], message[2])
+         #send_email("phatpham@berkeley.edu", message[0][person], message[1], message[2])
+     send_email("phatpham@berkeley.edu", "ntoledo@berkeley.edu", message[1], message[2])
      #Email for requester
-     send_email("phatpham@berkeley.edu", row[11], message[3], message[4])
+     send_email("phatpham@berkeley.edu", row[8], message[3], message[4])
 
 
 #Takes in request row, and returns [recipients, subject1, message1, subject2, message2]
@@ -32,14 +35,16 @@ def send_message(row):
 def message_handler(row):
     """Remember to implement the remind function in all cases"""
     topic = row[2]
-    actionsDict[topic]()
+    #actionsDict[topic]()
+    row = row + ["" for x in range(99)]
+    print(topic)
     if topic == "Contacting someone from outside of ULAB":
-        recipients = get_recipients(group)
+        #recipients = get_recipients(group)
         subject = "You have been assigned a task with {} priority".format(row[3])
         message = "{} wants you to contact {} from outside of ULAB with {} priority.\nExtra Information: {}\n".format(row[9], row[27], row[3], row[28])
         subject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
-        return [recipients, subject, message, subject2, message2]
+        return ["", subject, message, subject2, message2]
     if topic == "Getting equipment":
         recipients = get_recipients(group)
         subject = "{} wants {} with {} priority".format(row[9], row[29], row[3])
@@ -87,7 +92,7 @@ def message_handler(row):
         recipients = get_recipients(group)
         subject = "{} requests Liaison Training with {} priority".format(row[9], row[3])
         message = "{} from the {} request(s) training for {} with {} priority. Their email is {}.".format(row[9], row[10], row[33], row[3], row[35])
-hvsubject2 = "You have requested a task with {} priority".format(row[3])
+        hvsubject2 = "You have requested a task with {} priority".format(row[3])
         message2 = "Task for '{}' has been assigned with {} priority.".format(row[2], row[3])
         return [recipients, subject, message, subject2, message2]
 
@@ -116,12 +121,13 @@ hvsubject2 = "You have requested a task with {} priority".format(row[3])
         return [recipients, subject, message, subject2, message2]
 
     #Other Case
+    print("did not find topic")
     return
 
 def remind(row):
     print("Reminding...")
     when_remind = remindDict[row[2]]
-    if (not when_remind) or (row[1] = "Yes"):
+    if (not when_remind) or (row[1] == "Yes"):
         return
     send_message(row)
     Timer(when_remind, remind, row).start()
