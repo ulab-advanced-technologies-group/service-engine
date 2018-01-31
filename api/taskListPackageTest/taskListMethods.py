@@ -17,8 +17,9 @@ except ImportError:
 SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'ULAB TASK LIST MANAGER'
-spreadsheet_id = '12139-XV2BxNQ_MND-Ng6YQEPK3FK5V8D-U2_-YNiVOI'
-
+spreadsheet_id = '1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg'
+SHEETID = 1624733238
+SHEETNAME = "Automated-Service-Engine"
 
 def get_credentials():
     """Gets valid user credentials from storage.
@@ -65,7 +66,7 @@ def createTask(name, assignee, deadline, taskType, priority, info=None, file=Non
     reqBody = {}
     reqBody["values"] = [[name, assignee, deadline, "", taskType, "Pending", info, file, priority]]
     reqBody["majorDimension"] = "ROWS"
-    request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, valueInputOption="USER_ENTERED", range="A3", insertDataOption="INSERT_ROWS", body=reqBody)
+    request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, valueInputOption="USER_ENTERED", range="{}!A3".format(SHEETNAME), insertDataOption="INSERT_ROWS", body=reqBody)
     return int(request.execute()['updates']['updatedRange'].split(":")[-1][1:])
 
 ## Get Task given its ID
