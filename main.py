@@ -1,8 +1,7 @@
 import os
 from flask import Flask, render_template, url_for, redirect, request
 import content
-from api import gmailAPI as gmail
-# from api import googleSheetAPI as sheetAPI
+from api import handler
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -96,9 +95,7 @@ def service_handler():
     if request.method == 'POST':
         # insert handler code here
         data = request.get_json()
-        print(data)
-
-        gmail.send_email("eucbital@berkeley.edu", "eucbital@berkeley.edu", "ok", str(data))
+        handler.handle(data)
         return render_template('404.html'), 204
 
 ##################### Error Handling #####################
