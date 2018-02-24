@@ -21,6 +21,7 @@ spreadsheet_id = '1Lz50t87PPdlXymskt1uNEHd8pP7y9h9Te7i9XJCGfSg'
 SHEETID = 1624733238
 SHEETNAME = "Automated-Service-Engine"
 
+
 def get_credentials():
     """Gets valid user credentials from storage.
 
@@ -64,7 +65,7 @@ def updateCellRequest(text, cell):
 ##       -also still need the date created
 def createTask(name, assignee, deadline, taskType, priority, info=None, file=None):
     reqBody = {}
-    reqBody["values"] = [[name, assignee, deadline, "", taskType, "Pending", info, file, priority]]
+    reqBody["values"] = [["", name, assignee, deadline, "", taskType, "Pending", info, file, priority]]
     reqBody["majorDimension"] = "ROWS"
     request = service.spreadsheets().values().append(spreadsheetId=spreadsheet_id, valueInputOption="USER_ENTERED", range="{}!A3".format(SHEETNAME), insertDataOption="INSERT_ROWS", body=reqBody)
     return int(request.execute()['updates']['updatedRange'].split(":")[-1][1:])
@@ -75,12 +76,12 @@ def getTask(id):
 
 ## Set Task to Completed
 def completeTask(id):
-    cell = "F" + str(id)
+    cell = "G" + str(id)
     return updateCellRequest("Resolved", cell)
 
 ## Set Task to In Progress
 def acceptTask(id):
-    cell = "F" + str(id)
+    cell = "G" + str(id)
     return updateCellRequest("In Progress", cell)
 
 ## Get All Tasks for a Person
@@ -94,6 +95,10 @@ def getAllTasks():
 ## Return list of uncompleted Tasks
 def getAllUncompletedTasks():
     return
+
+def numTasks():
+    values = retrieveSpreadsheetData(spreadsheet_id, 'A2:J', CLIENT_SECRET_FILE)
+    return len(values)
 
 credentials = get_credentials()
 http = credentials.authorize(httplib2.Http())
